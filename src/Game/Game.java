@@ -1,9 +1,11 @@
-package Server;
+package Game;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Iterator;
+
+import Client.Client;
+import Shared.Player;
 
 public class Game extends Frame implements Runnable{
 	private Client client;
@@ -13,18 +15,14 @@ public class Game extends Frame implements Runnable{
         setTitle("Game Client");
         setSize(400, 300);
         setLayout(new FlowLayout()); 
-        
-        
+   
         this.client = new Client("localhost", 7071);
         
-        
-		this.label = new Label("Start.");
-        add(label);
-        
+        addItems();
         addListeners();
         setVisible(true);
         requestFocus(); 
-
+        
         gameLoop.start();
         client.start();
     }
@@ -59,29 +57,44 @@ public class Game extends Frame implements Runnable{
     	
     };
     
-    private void addListeners() {
-    	 // Omogućava da prozor hvata fokus
+    private void addItems() {
+		this.label = new Label("Start.");
+        add(label);
         
+	}
+    
+    private void addListeners() {
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {}
 
+            private void setCurrentInput(Player.ValidInput input) {
+            	synchronized (client) {
+					client.setCurrentInput(input);
+					client.notifyAll();
+				}
+			}
+            
             @Override
             public void keyPressed(KeyEvent e) {
+            	Player.ValidInput input = null;
                 if (e.getKeyCode() == KeyEvent.VK_W) {
-                    synchronized (client) {
-						client.setCurrentInput(Player.ValidInput.w);
-						client.notifyAll();
-					}
-                    
+                	input = Player.ValidInput.w;
+                }else if (e.getKeyCode() == KeyEvent.VK_A) {
+                	input = Player.ValidInput.a;
+                }else if (e.getKeyCode() == KeyEvent.VK_S) {
+                	input = Player.ValidInput.s;
+                }else if (e.getKeyCode() == KeyEvent.VK_D) {
+                	input = Player.ValidInput.d;
                 }
+                if(input != null)
+                	setCurrentInput(input);
             }
 
             @Override
             public void keyReleased(KeyEvent e) {}
         });
 
-        // Zatvaranje prozora na "X"
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 dispose();
@@ -90,8 +103,6 @@ public class Game extends Frame implements Runnable{
             }
         });
 	}
-    
-    
     
 
     public static void main(String[] args) {

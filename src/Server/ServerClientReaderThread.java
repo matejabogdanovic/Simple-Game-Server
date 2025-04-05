@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 
 import javax.imageio.metadata.IIOMetadataFormat;
 
+import Shared.Player;
+
 public class ServerClientReaderThread extends Thread {
 	private int id;
 	private ObjectInputStream input;
@@ -39,11 +41,13 @@ public class ServerClientReaderThread extends Thread {
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} 
+				}  
 			}
 		}catch (IOException e) {
 			System.out.println("ServerClientReader closing for player: " + id);
 			//e.printStackTrace();
+		}finally {
+			server.getPlayers()[id] = null;
 		}
 	}
 }

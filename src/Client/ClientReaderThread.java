@@ -1,8 +1,10 @@
-package Server;
+package Client;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Iterator;
+
+import Shared.Player;
 
 public class ClientReaderThread extends Thread{
 	private Client client;

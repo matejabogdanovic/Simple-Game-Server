@@ -7,6 +7,8 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import Shared.Player;
+
 public class ServerConnectionThread extends Thread{
 	private Socket client;
 	private int id;
@@ -25,7 +27,7 @@ public class ServerConnectionThread extends Thread{
 	public void run() {
 		try (InputStream is = client.getInputStream();
 				OutputStream os = client.getOutputStream();
-				ObjectInputStream input = new ObjectInputStream(is);
+		 		ObjectInputStream input = new ObjectInputStream(is);
 				ObjectOutputStream output = new ObjectOutputStream(os);){
 			
 			try {// get player name 
@@ -43,22 +45,25 @@ public class ServerConnectionThread extends Thread{
 				e.printStackTrace();
 			}
 			 
-
+ 
 			this.readerThread = new ServerClientReaderThread(id, input, server);
 			this.writerThread = new ServerClientWriterThread(id, output, server);
 			readerThread.start();
 			writerThread.start();
 			
-			try {
-				readerThread.join();
-				writerThread.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			readerThread.join();
+			writerThread.join();
+			
 		} catch (IOException e) {
 			System.out.println("Client: "+id + " closed connection.");
 
+		}catch (InterruptedException e) {
+			
+		}finally {
+			readerThread.interrupt();
+			writerThread.interrupt();
+			
 		}
 		System.out.println("Closing connection for: "+id);
 	}

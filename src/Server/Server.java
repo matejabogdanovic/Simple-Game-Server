@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import Shared.Player;
+
 public class Server {
 	private ServerTimerThread timer = new ServerTimerThread();
 	private ServerConnectionThread[] connectionThreads;
@@ -18,7 +20,7 @@ public class Server {
 		if(playerCnt <= 0)throw new Exception("Invalid playerCnt.");
 		players = new Player[playerCnt];
 		connectionThreads = new ServerConnectionThread[playerCnt];
-		this.port = port;
+		this.port = port; 
 		this.timer.start();
 	}
 	
@@ -63,8 +65,8 @@ public class Server {
 		players[index] = player;
 	}
 	 
-	public static void main(String[] args) throws Exception {
-		Server server = new Server(2, 7071);
-		server.start();
-	}
+//	public static void main(String[] args) throws Exception {
+//		Server server = new Server(2, 7071);
+//		server.start();
+//	}
 }

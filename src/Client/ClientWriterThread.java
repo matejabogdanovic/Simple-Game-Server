@@ -1,9 +1,11 @@
-package Server;
+package Client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
+
+import Shared.Player;
 
 public class ClientWriterThread extends Thread{
 	private Client client;

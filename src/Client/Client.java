@@ -1,4 +1,4 @@
-package Server;
+package Client;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,6 +6,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+
+import Shared.Player;
+
 
 
 
@@ -37,20 +40,17 @@ public class Client{
 			
 			readerThread = new ClientReaderThread(this, pin);
 			writerThread = new ClientWriterThread(this, pout);
-			readerThread.start();
+			readerThread.start(); 
 			writerThread.start();
 
-			try {
-				readerThread.join();
-				writerThread.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
+			readerThread.join();
+			writerThread.join();
+
 		} catch (IOException e) {
 			// TODO: handle exception
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}finally {
 			readerThread.interrupt();
 			writerThread.interrupt();
