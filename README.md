@@ -8,7 +8,7 @@ There are four Java packages in the project:
 
 - `Server` – Contains classes that implement the server side.
 - `Client` – Contains classes that implement the client side.
-- `Shared` – Defines types that are shared between server and client. In this case, it's the 'Player' class. The server sends a 'Player[]' array – one 'Player' object for each connected player.
+- `Shared` – Defines types that are shared between server and client. In this case, it's the `Player` class. The server sends a `Player[]` array – one `Player` object for each connected player.
 - `Game` – Represents the game itself, which the developer implements.
 
 ## 🚀 How It Works
