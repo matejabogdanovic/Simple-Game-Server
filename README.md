@@ -28,7 +28,7 @@ There are four Java packages in the project:
    ```
    The client is typically started after setting up the window and environment (AWT is used for GUI).
 
-3. **Client threading model:**
+3. **Client threading model:**<br>
    The client uses two threads:
    - **Reader thread** – receives updates from the server.
    - **Writer thread** – sends keyboard input to the server.
