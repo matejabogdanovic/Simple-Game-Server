@@ -44,7 +44,7 @@ public class Server {
 			
 			for (int i = 0; i < connectionThreads.length; i++) {
 				connectionThreads[i].join();
-			}
+			} 
 			
 			timer.interrupt();
 		} catch (IOException e) {

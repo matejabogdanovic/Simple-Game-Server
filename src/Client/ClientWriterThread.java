@@ -14,7 +14,7 @@ public class ClientWriterThread extends Thread{
 	public ClientWriterThread(Client client, ObjectOutputStream os) {
 		super();
 		this.client = client;
-		this.os = os;
+		this.os = os; 
 	}
   
 	public Player.ValidInput getCurrentInput() {
@@ -40,10 +40,14 @@ public class ClientWriterThread extends Thread{
 					} 
 				} 
  
-			}
+			} 
 		} catch (IOException | InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			System.out.println("Server closed connection.");
+		}finally { 
+			synchronized (client) {
+				client.notifyAll();
+			}
+			System.out.println("ClientWriterThread closing.");
 		}
 		
 	}

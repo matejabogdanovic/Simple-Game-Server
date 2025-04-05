@@ -35,14 +35,14 @@ public class ServerClientReaderThread extends Thread {
 					// processing input
 					 
 					Player.ValidInput playerInput = (Player.ValidInput) o;
-					
+					 
 					player.processInput(playerInput);
 					
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}  
-			}
+			}  
 		}catch (IOException e) {
 			System.out.println("ServerClientReader closing for player: " + id);
 			//e.printStackTrace();

@@ -10,13 +10,13 @@ import Shared.Player;
 public class Game extends Frame implements Runnable{
 	private Client client;
 	private Thread gameLoop = new Thread(this);
-	private Label label;
+	private Label label; 
     public Game() { 
         setTitle("Game Client");
         setSize(400, 300);
         setLayout(new FlowLayout()); 
    
-        this.client = new Client("localhost", 7071);
+        this.client = new Client("localhost", 7071, "_gamer_name_");
         
         addItems();
         addListeners();
@@ -31,7 +31,7 @@ public class Game extends Frame implements Runnable{
     public void run() {
     	Player[] players = null;
     	try {
-    		System.out.println("alo");
+    	
 	    	while (!Thread.currentThread().isInterrupted()) {
 				Thread.sleep(50);
 				synchronized (client) {
@@ -40,7 +40,7 @@ public class Game extends Frame implements Runnable{
 				}
 				
 				if(players == null) continue;
-				System.out.println("alo");
+		
 				String text = "";
 				for (int i = 0; i < players.length; i++) {
 					if(players[i]!=null)
@@ -74,7 +74,7 @@ public class Game extends Frame implements Runnable{
 					client.notifyAll();
 				}
 			}
-            
+             
             @Override
             public void keyPressed(KeyEvent e) {
             	Player.ValidInput input = null;

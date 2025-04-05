@@ -59,10 +59,12 @@ public class ServerConnectionThread extends Thread{
 			System.out.println("Client: "+id + " closed connection.");
 
 		}catch (InterruptedException e) {
-			
+			 
 		}finally {
-			readerThread.interrupt();
-			writerThread.interrupt();
+			if(readerThread != null)
+				readerThread.interrupt();
+			if(writerThread != null)
+				writerThread.interrupt();
 			
 		}
 		System.out.println("Closing connection for: "+id);

@@ -11,7 +11,7 @@ public class ServerClientWriterThread extends Thread{
 	private ObjectOutputStream output;
 	private Server server;
 	public ServerClientWriterThread(int id, ObjectOutputStream output, Server server) {
-		super();
+		super(); 
 		this.server = server;
 		this.id = id;
 		this.output = output;
@@ -31,7 +31,7 @@ public class ServerClientWriterThread extends Thread{
 				if(players[id] == null)break;
 				players[id].applyInput();
 				output.writeObject(players);
-				  
+				   
 			}
 		}catch (InterruptedException | IOException e) {
 			System.out.println("ServerClientWriter closing for player: " + id);

@@ -14,33 +14,36 @@ public class ClientReaderThread extends Thread{
 		super();
 		this.client = client; 
 		this.is = is;
-	} 
+	}  
 	@Override
 	public void run() {
 		Player[] players = null;
-		while(!Thread.currentThread().isInterrupted()) {
-			try {
+		try {
+			while(!Thread.currentThread().isInterrupted()) {
+				
 				Object o = is.readObject();
 				while(!(o instanceof Player[])) o = is.readObject();
 				players = (Player[]) o;
-				
+					
 				synchronized (client) {
 					client.setPlayers(players);
 					client.notifyAll();
 				}
-				
-				
+					
+					
 				for (int i = 0; i < players.length; i++) {
-					//System.out.println(players[i]);
+						//System.out.println(players[i]);
 				}
-				
-				 
-			} catch (IOException | ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				System.out.println("Closing socket.");
-			}
+						 
+			} 
 
+		}catch (IOException | ClassNotFoundException e) {
+			System.out.println("Server closed connection.");
+		}finally {  
+			synchronized (client) {
+				client.notifyAll();
+			}
+			System.out.println("ClientReaderThread closing.");
 		}
 		
 	}

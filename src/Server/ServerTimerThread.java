@@ -16,7 +16,7 @@ public class ServerTimerThread extends Thread{
 					this.tick = true;
 					this.notifyAll();
 				}
-				Thread.sleep(50);
+				Thread.sleep(50); 
 				synchronized (this) {
 					this.tick = false;
 				}
@@ -25,6 +25,12 @@ public class ServerTimerThread extends Thread{
 		} catch (InterruptedException e) {
 			
 		}
-		System.out.println("Closing timer.");
+		finally {
+			synchronized(this) {
+				this.notifyAll();
+			}
+			System.out.println("Closing timer.");
+		}
+		
 	}
 }
